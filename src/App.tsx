@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import HomePage from "./component/HomePage";
-import ProductCard from "./component/ProductCard";
-import LandingPage from "./component/LandingPage";
 
+import LandingPage from "./component/LandingPage";
+import ProductInfo from "./component/ProductInfo";
+import WomenCategory from "./component/WomenCategory";
+import { CartContext } from "./component/CartContext";
+
+interface CartValueType {
+  cartValue: any;
+}
 function App() {
+  const [cartValue, setCartValue] = useState<CartValueType>();
   return (
     <div className="App">
-      <Router>
-        <Switch>
-          <Route path="/product" component={ProductCard} />
-          <Route path="/allproducts" component={LandingPage} />
-          <Route path="/" component={HomePage} />
-        </Switch>
-      </Router>
+      <CartContext.Provider value={{ cartValue, setCartValue }}>
+        <Router>
+          <Switch>
+            <Route path="/women" component={WomenCategory} />
+            <Route path="/product/:id" component={ProductInfo} />
+            <Route path="/" component={LandingPage} />
+          </Switch>
+        </Router>
+      </CartContext.Provider>
     </div>
   );
 }

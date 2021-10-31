@@ -17,8 +17,6 @@ const ProductCardTile = ({
   image,
   price,
   title,
-  description,
-  rating,
 }: ProductProps) => {
   return (
     <div>
@@ -63,11 +61,9 @@ const ProductCardTile = ({
             </Box>
             {price}
           </Box>
-          <Box d="flex" mt="4" alignItems="center" ml="130px">
-            <Link to="/product">
-              <Button colorScheme="purple" id={id}>
-                View Product
-              </Button>
+          <Box d="flex" mt="4" alignItems="center" ml="100px">
+            <Link to={`/product/${id}`}>
+              <Button colorScheme="purple">View Product</Button>
             </Link>
           </Box>
         </Box>

@@ -1,30 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import ProductCardTile from "./ProductCardTile";
-import { Grid, Box } from "@chakra-ui/react";
+import { SimpleGrid, Box } from "@chakra-ui/react";
 import Heading from "./Heading";
+import { CartContext } from "./CartContext";
 
 const LandingPage = () => {
   const [allProducts, setallProducts] = useState([]);
-  axios
-    .get("https://fakestoreapi.com/products")
-    .then(function (response) {
-      const productsData = response.data;
-      setallProducts(productsData);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
+  useEffect(() => {
+    axios
+      .get("https://fakestoreapi.com/products")
+      .then(function (response) {
+        console.log(response.data);
+        setallProducts(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [allProducts]);
   return (
     <Box>
       <Box>
         <Heading />
       </Box>
-      <Grid templateColumns="repeat(4, 1fr)" gap={6} color="gray">
+      <SimpleGrid columns={4} spacing={10} p={10} color="gray" mx={100}>
         {allProducts.map(
           ({ category, description, id, image, price, rating, title }, idx) => {
-            console.log(allProducts);
             return (
               <ProductCardTile
                 category={category}
@@ -39,7 +40,7 @@ const LandingPage = () => {
             );
           }
         )}
-      </Grid>
+      </SimpleGrid>
     </Box>
   );
 };
